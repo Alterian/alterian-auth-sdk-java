@@ -1,0 +1,2403 @@
+openapi: 3.0.1
+info:
+  title: Authentication API
+  version: 6.35.0
+servers:
+- url: /auth/api.svc/jsonsdk
+security:
+- TokenAuth:
+  - ""
+paths:
+  /ApplicationLogin:
+    post:
+      description: this method requests the auth server give you a token for a particular
+        "application"
+      operationId: ApplicationLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationLogin_request'
+        description: this method requests the auth server give you a token for a particular
+          "application"
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationLogin_default_response'
+          description: Success
+      summary: this method requests the auth server give you a token for a particular
+        "application"
+      tags:
+      - Authentication
+      x-content-type: application/json
+      x-accepts: application/json
+  /FormsAuthentication:
+    post:
+      description: "Provide a username and SHA1 encoded password to log into the system.\
+        \  It is always recommended that this method be called via a secured method.\
+        \ \n            Should be followed by a call to @see(ApplicationLogin)"
+      operationId: FormsAuthentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormsAuthentication_request'
+        description: "Provide a username and SHA1 encoded password to log into the\
+          \ system.  It is always recommended that this method be called via a secured\
+          \ method. \n            Should be followed by a call to @see(ApplicationLogin)"
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormsAuthentication_default_response'
+          description: Success
+      summary: "Provide a username and SHA1 encoded password to log into the system.\
+        \  It is always recommended that this method be called via a secured method.\
+        \ \n            Should be followed by a call to @see(ApplicationLogin)"
+      tags:
+      - Authentication
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetIdentityUrl:
+    post:
+      description: ""
+      operationId: GetIdentityUrl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetIdentityUrl_request'
+        description: ""
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdentityUrl_default_response'
+          description: Success
+      summary: ""
+      tags:
+      - Authentication
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetSiteDetails:
+    post:
+      description: Returns the details for a particular application.  This is the
+        same information as returned when you call @see(ApplicationLogin) but you
+        will not receive an access token from this method.
+      operationId: GetSiteDetails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSiteDetails_request'
+        description: Returns the details for a particular application.  This is the
+          same information as returned when you call @see(ApplicationLogin) but you
+          will not receive an access token from this method.
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationLogin_default_response'
+          description: Success
+      summary: Returns the details for a particular application.  This is the same
+        information as returned when you call @see(ApplicationLogin) but you will
+        not receive an access token from this method.
+      tags:
+      - Authentication
+      x-content-type: application/json
+      x-accepts: application/json
+  /Logout:
+    post:
+      description: Logs the requested token out of the authentication system and out
+        of any application for which a call has been made to @see(ApplicationLogin)
+      operationId: Logout
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Logs the requested token out of the authentication system and out of
+        any application for which a call has been made to @see(ApplicationLogin)
+      tags:
+      - Authentication
+      x-accepts: application/json
+  /NTLMAuthentication:
+    post:
+      description: "If you have configured NTLM authentication properly, you can use\
+        \ this to get an authentication token.  Please note you must have configured\
+        \ IIS and everything correctly for this method to function."
+      operationId: NTLMAuthentication
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormsAuthentication_default_response'
+          description: Success
+      summary: "If you have configured NTLM authentication properly, you can use this\
+        \ to get an authentication token.  Please note you must have configured IIS\
+        \ and everything correctly for this method to function."
+      tags:
+      - Authentication
+      x-accepts: application/json
+  /OpenIdAuthentication:
+    get:
+      description: Use an Open Id Connect token to connect.  Your system must be configured
+        to allow this; please review the documentation.
+      operationId: OpenIdAuthentication
+      parameters:
+      - explode: true
+        in: query
+        name: Code
+        required: false
+        schema:
+          description: ""
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: State
+        required: false
+        schema:
+          description: ""
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Void'
+          description: Success
+      summary: Use an Open Id Connect token to connect.  Your system must be configured
+        to allow this; please review the documentation.
+      tags:
+      - Authentication
+      x-accepts: application/json
+  /SAMLAuthentication:
+    post:
+      description: "Provided a valid SAML [Base64 encoded] token, this will return\
+        \ back an auth server token and application information."
+      operationId: SAMLAuthentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SAMLAuthentication_request'
+        description: "Provided a valid SAML [Base64 encoded] token, this will return\
+          \ back an auth server token and application information."
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormsAuthentication_default_response'
+          description: Success
+      summary: "Provided a valid SAML [Base64 encoded] token, this will return back\
+        \ an auth server token and application information."
+      tags:
+      - Authentication
+      x-content-type: application/json
+      x-accepts: application/json
+  /AddCertificate:
+    post:
+      description: Adds a certificate for use with single sign on
+      operationId: AddCertificate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCertificate_request'
+        description: Adds a certificate for use with single sign on
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCertificate_default_response'
+          description: Success
+      summary: Adds a certificate for use with single sign on
+      tags:
+      - Certificates
+      x-content-type: application/json
+      x-accepts: application/json
+  /DeleteCertificate:
+    post:
+      description: Deletes the specified certificate
+      operationId: DeleteCertificate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCertificate_request'
+        description: Deletes the specified certificate
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Deletes the specified certificate
+      tags:
+      - Certificates
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetCertificate:
+    post:
+      description: Gets the specified certificate
+      operationId: GetCertificate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCertificate_request'
+        description: Gets the specified certificate
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCertificate_default_response'
+          description: Success
+      summary: Gets the specified certificate
+      tags:
+      - Certificates
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetCertificates:
+    post:
+      description: Gets a list of available certificates
+      operationId: GetCertificates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCertificates_request'
+        description: Gets a list of available certificates
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCertificates_default_response'
+          description: Success
+      summary: Gets a list of available certificates
+      tags:
+      - Certificates
+      x-content-type: application/json
+      x-accepts: application/json
+  /UpdateCertificate:
+    post:
+      description: Updates information associated with a certificate
+      operationId: UpdateCertificate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCertificate_request'
+        description: Updates information associated with a certificate
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Updates information associated with a certificate
+      tags:
+      - Certificates
+      x-content-type: application/json
+      x-accepts: application/json
+  /AddIssuer:
+    post:
+      description: Adds an Issuer for a Certificate used with single sign on
+      operationId: AddIssuer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddIssuer_request'
+        description: Adds an Issuer for a Certificate used with single sign on
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCertificate_default_response'
+          description: Success
+      summary: Adds an Issuer for a Certificate used with single sign on
+      tags:
+      - Issuers
+      x-content-type: application/json
+      x-accepts: application/json
+  /DeleteIssuer:
+    post:
+      description: Deletes an @see(Issuer) for a Certificate used with single sign
+        on
+      operationId: DeleteIssuer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteIssuer_request'
+        description: Deletes an @see(Issuer) for a Certificate used with single sign
+          on
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Deletes an @see(Issuer) for a Certificate used with single sign on
+      tags:
+      - Issuers
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetIssuer:
+    post:
+      description: Retrieves an Issuer for a Certificate used with single sign on
+      operationId: GetIssuer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetIssuer_request'
+        description: Retrieves an Issuer for a Certificate used with single sign on
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIssuer_default_response'
+          description: Success
+      summary: Retrieves an Issuer for a Certificate used with single sign on
+      tags:
+      - Issuers
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetIssuers:
+    post:
+      description: Gets a list of available issuers
+      operationId: GetIssuers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCertificates_request'
+        description: Gets a list of available issuers
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIssuers_default_response'
+          description: Success
+      summary: Gets a list of available issuers
+      tags:
+      - Issuers
+      x-content-type: application/json
+      x-accepts: application/json
+  /UpdateIssuer:
+    post:
+      description: Updates information associated with a certificate's issuer
+      operationId: UpdateIssuer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddIssuer_request'
+        description: Updates information associated with a certificate's issuer
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Updates information associated with a certificate's issuer
+      tags:
+      - Issuers
+      x-content-type: application/json
+      x-accepts: application/json
+  /AddLogin:
+    post:
+      description: Add a login into the system
+      operationId: AddLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddLogin_request'
+        description: Add a login into the system
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddLogin_default_response'
+          description: Success
+      summary: Add a login into the system
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /DisableLogin:
+    post:
+      description: Flag a login as disabled
+      operationId: DisableLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisableLogin_request'
+        description: Flag a login as disabled
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Flag a login as disabled
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /EnableLogin:
+    post:
+      description: "Flag a login as enabled.  If a login has been expired due to inactivity,\
+        \ this will enable it to be logged into again"
+      operationId: EnableLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableLogin_request'
+        description: "Flag a login as enabled.  If a login has been expired due to\
+          \ inactivity, this will enable it to be logged into again"
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: "Flag a login as enabled.  If a login has been expired due to inactivity,\
+        \ this will enable it to be logged into again"
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetCurrentLogin:
+    post:
+      description: Returns back info on the current login
+      operationId: GetCurrentLogin
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCurrentLogin_default_response'
+          description: Success
+      summary: Returns back info on the current login
+      tags:
+      - Logins
+      x-accepts: application/json
+  /GetLogin:
+    post:
+      description: Return back info on a single login
+      operationId: GetLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLogin_request'
+        description: Return back info on a single login
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCurrentLogin_default_response'
+          description: Success
+      summary: Return back info on a single login
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetLogins:
+    post:
+      description: "Query the login list by setting values, optionally including or\
+        \ excluding logins.  If you leave the settings value empty, you can query\
+        \ just by login id"
+      operationId: GetLogins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLogins_request'
+        description: "Query the login list by setting values, optionally including\
+          \ or excluding logins.  If you leave the settings value empty, you can query\
+          \ just by login id"
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLogins_default_response'
+          description: Success
+      summary: "Query the login list by setting values, optionally including or excluding\
+        \ logins.  If you leave the settings value empty, you can query just by login\
+        \ id"
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /RenameLogin:
+    post:
+      description: Renames a login
+      operationId: RenameLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameLogin_request'
+        description: Renames a login
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Renames a login
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /UpdateLogin:
+    post:
+      description: Update a login
+      operationId: UpdateLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddLogin_request'
+        description: Update a login
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Update a login
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /UpdateLoginEx:
+    post:
+      description: Updates pieces of a login
+      operationId: UpdateLoginEx
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLoginEx_request'
+        description: Updates pieces of a login
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Updates pieces of a login
+      tags:
+      - Logins
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetAPIMetadata:
+    post:
+      description: "Returns back a list of @see(APIMetadata) objects from the system.\
+        \ This allows the caller to discover all the methods and class types of this\
+        \ API, including validation rules."
+      operationId: GetAPIMetadata
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAPIMetadata_request'
+        description: "Returns back a list of @see(APIMetadata) objects from the system.\
+          \ This allows the caller to discover all the methods and class types of\
+          \ this API, including validation rules."
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAPIMetadata_default_response'
+          description: Success
+      summary: "Returns back a list of @see(APIMetadata) objects from the system.\
+        \ This allows the caller to discover all the methods and class types of this\
+        \ API, including validation rules."
+      tags:
+      - Metadata
+      x-content-type: application/json
+      x-accepts: application/json
+  /ChangePassword:
+    post:
+      description: Changes a login's password
+      operationId: ChangePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword_request'
+        description: Changes a login's password
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Changes a login's password
+      tags:
+      - Passwords
+      x-content-type: application/json
+      x-accepts: application/json
+  /ExpirePassword:
+    post:
+      description: Flags a login has having an expired password.  This forces the
+        login to change their password upon their next attempt to log in.
+      operationId: ExpirePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpirePassword_request'
+        description: Flags a login has having an expired password.  This forces the
+          login to change their password upon their next attempt to log in.
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Flags a login has having an expired password.  This forces the login
+        to change their password upon their next attempt to log in.
+      tags:
+      - Passwords
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetPasswordComplexityRules:
+    post:
+      description: Returns back the password complexity rules for use in a GUI.  These
+        rules are also applied on the backend.
+      operationId: GetPasswordComplexityRules
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPasswordComplexityRules_default_response'
+          description: Success
+      summary: Returns back the password complexity rules for use in a GUI.  These
+        rules are also applied on the backend.
+      tags:
+      - Passwords
+      x-accepts: application/json
+  /AddSetting:
+    post:
+      description: Adds in a setting which can then be mapped to an issuer for the
+        purposes of claims authentication.
+      operationId: AddSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSetting_request'
+        description: Adds in a setting which can then be mapped to an issuer for the
+          purposes of claims authentication.
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCertificate_default_response'
+          description: Success
+      summary: Adds in a setting which can then be mapped to an issuer for the purposes
+        of claims authentication.
+      tags:
+      - Settings
+      x-content-type: application/json
+      x-accepts: application/json
+  /DeleteSetting:
+    post:
+      description: Deletes a setting
+      operationId: DeleteSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteSetting_request'
+        description: Deletes a setting
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Deletes a setting
+      tags:
+      - Settings
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetSetting:
+    post:
+      description: Read a setting
+      operationId: GetSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSetting_request'
+        description: Read a setting
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSetting_default_response'
+          description: Success
+      summary: Read a setting
+      tags:
+      - Settings
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetSettings:
+    post:
+      description: Reads a list of settings
+      operationId: GetSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSettings_request'
+        description: Reads a list of settings
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSettings_default_response'
+          description: Success
+      summary: Reads a list of settings
+      tags:
+      - Settings
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetSettingsValues:
+    post:
+      description: Reads settings and their values
+      operationId: GetSettingsValues
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSettingsValues_request'
+        description: Reads settings and their values
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSettings_default_response'
+          description: Success
+      summary: Reads settings and their values
+      tags:
+      - Settings
+      x-content-type: application/json
+      x-accepts: application/json
+  /SetEMServiceURL:
+    post:
+      description: Updates the EM service URL
+      operationId: SetEMServiceURL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetEMServiceURL_request'
+        description: Updates the EM service URL
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Updates the EM service URL
+      tags:
+      - Settings
+      x-content-type: application/json
+      x-accepts: application/json
+  /UpdateSetting:
+    post:
+      description: Updates a setting
+      operationId: UpdateSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSetting_request'
+        description: Updates a setting
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout_default_response'
+          description: Success
+      summary: Updates a setting
+      tags:
+      - Settings
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetHostNames:
+    post:
+      description: This is the name of the server that you have IMS running on
+      operationId: GetHostNames
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCertificates_request'
+        description: This is the name of the server that you have IMS running on
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetHostNames_default_response'
+          description: Success
+      summary: This is the name of the server that you have IMS running on
+      tags:
+      - Sites
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetSite:
+    post:
+      description: Return back a specific @see(AuthSite)
+      operationId: GetSite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSite_request'
+        description: Return back a specific @see(AuthSite)
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSite_default_response'
+          description: Success
+      summary: Return back a specific @see(AuthSite)
+      tags:
+      - Sites
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetSites:
+    post:
+      description: Return back a list of @see(AuthSite)s; useful for APIs which require
+        an authentication site identifier
+      operationId: GetSites
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSites_request'
+        description: Return back a list of @see(AuthSite)s; useful for APIs which
+          require an authentication site identifier
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSites_default_response'
+          description: Success
+      summary: Return back a list of @see(AuthSite)s; useful for APIs which require
+        an authentication site identifier
+      tags:
+      - Sites
+      x-content-type: application/json
+      x-accepts: application/json
+  /GetSiteTypes:
+    post:
+      description: Return back a list of site types for use with @see(GetSites)
+      operationId: GetSiteTypes
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSiteTypes_default_response'
+          description: Success
+      summary: Return back a list of site types for use with @see(GetSites)
+      tags:
+      - Sites
+      x-accepts: application/json
+components:
+  schemas:
+    OperationResult:
+      description: ""
+      properties:
+        StatusCode:
+          description: A string constant representing the success or failure of the
+            method call. See the status codes table below.
+          type: string
+        DebugMessage:
+          description: "By default, an empty array []. Internal debug messages can\
+            \ be exposed by changing a configuration setting on the server, but be\
+            \ aware that this can leak internal implementation details such as stack\
+            \ calls or method names to the caller."
+          type: string
+        Detail:
+          description: |-
+            Optionally return additional information about this API call
+                        This will typically contain the reason WHY a method failed (if it fails), warnings if success, and other bits of data that
+                        are NOT part of the main result.
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        Cursor:
+          $ref: '#/components/schemas/APICursor'
+      type: object
+      xml:
+        name: OperationResult
+    APICursor:
+      description: |-
+        A cursor is an optional set of data that controls how to get a subset of a list of data from the API.
+                    This parameter can optionally be sent as a parameter to filter the result set returned.
+                    If a cursor is passed to an API method then a cursor will also be returned from the API with additional information populated so that it's easy to calculate the number of pages and find the correct page number
+                    NOTE that a cursor will NOT be returned if it was NOT passed in the initial method call, as all matching results will already have been returned at that point.
+                    This is typically used when paging large sets of data in a UI.
+                    If a cursor is not passed then all matching results are returned.
+      example:
+        SortProperty: SortProperty
+        Total: 1
+        From: 0
+        To: 6
+        SortDescending: true
+      properties:
+        From:
+          description: What is the first result that should be returned? Note that
+            this is 0-based (0 is the very first row). If this value is not supplied
+            then 0 is assumed.
+          format: int32
+          nullable: true
+          type: integer
+        To:
+          description: |-
+            What is the last result that should be returned? If this value is not supplied then all results are assumed. It is safe to provide a number that is larger than the total number of results.
+                        available.
+          format: int32
+          nullable: true
+          type: integer
+        Total:
+          description: How many results are available in total? This is not used when
+            passing the cursor to a method; it is populated (read only) when the cursor
+            is returned from any method that uses a cursor.
+          format: int64
+          nullable: true
+          type: integer
+        SortDescending:
+          description: "If we want to sort the resulting list, do we want it sorted\
+            \ in descending order?  The default is ascending."
+          nullable: true
+          type: boolean
+        SortProperty:
+          description: "Property on the object by which you would like to sort.  If\
+            \ an invalid or null property is provided, default sorting will be applied\
+            \ as defined in each API method."
+          type: string
+      type: object
+      xml:
+        name: APICursor
+    ApplicationDetails:
+      description: ""
+      example:
+        SiteID: 5
+        Token: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        Settings:
+          key: Settings
+      properties:
+        SiteID:
+          description: ""
+          format: int32
+          type: integer
+        Token:
+          description: ""
+          format: uuid
+          type: string
+        Settings:
+          additionalProperties:
+            type: string
+          description: ""
+          type: object
+      type: object
+      xml:
+        name: ApplicationDetails
+    AuthenticationResults:
+      description: ""
+      example:
+        PasswordExpired: true
+        LoginID: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        Token: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        Sites:
+          key: null
+      properties:
+        Token:
+          description: ""
+          format: uuid
+          type: string
+        LoginID:
+          description: ""
+          format: uuid
+          type: string
+        Sites:
+          additionalProperties:
+            $ref: '#/components/schemas/Applications'
+          description: ""
+          type: object
+        PasswordExpired:
+          description: ""
+          type: boolean
+      type: object
+      xml:
+        name: AuthenticationResults
+    Applications:
+      description: ""
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      format: int32
+      type: integer
+      x-enum-varnames:
+      - All
+      - Alchemy
+      - DynamicMessenger
+      - Management
+      - AlchemyManagement
+      - Tridion
+      - RERE
+      - PowerBI
+      x-enum-descriptions:
+      - ""
+      - ""
+      - ""
+      - Authentication Management
+      - "Alchemy infrastructure management [add clients, etc.]"
+      - "Connecting to Tridion for Profile Rule Export, etc"
+      - The Realtime Rules Engine (RERE) can use the Campaigns Auth server - so list
+        it here.
+      - PowerBI in Token mode
+    Void:
+      description: ""
+      type: object
+      xml:
+        name: Void
+    Certificate:
+      description: ""
+      example:
+        Thumbprint: Thumbprint
+        ID: 0
+        System: true
+      properties:
+        ID:
+          description: Id of the certificate
+          format: int32
+          type: integer
+        Thumbprint:
+          description: |-
+            Thumbprint of the certificate, typically obtained by viewing the properties of the certificate.  The thumbprint property's hex string is placed here.
+                        For certificates which are used as part of SAML processing, this thumbprint can be a name instead.
+          type: string
+        System:
+          description: "Is this certificate a system certificate?  If you create a\
+            \ system certificate, you will be unable to delete it later.  This value\
+            \ would typically be set to false."
+          type: boolean
+      type: object
+      xml:
+        name: Certificate
+    Issuer:
+      description: Issuer of Certificate for single sign on
+      example:
+        CertificateID: 6
+        ID: 0
+        Settings:
+        - 1
+        - 1
+        Name: Name
+      properties:
+        ID:
+          description: Id of the Issuer
+          format: int32
+          type: integer
+        Name:
+          description: Name of the Issuer
+          type: string
+        CertificateID:
+          description: Id of the associated certificate
+          format: int32
+          type: integer
+        Settings:
+          description: Collection of settings which this issuer uses as assertions
+            for incoming SAML authentication requests
+          items:
+            format: int32
+            type: integer
+          type: array
+      type: object
+      xml:
+        name: Issuer
+    LoginInfo:
+      description: Info for a particular login
+      example:
+        NewPassword: NewPassword
+        PasswordExpires: 2000-01-23T04:56:07.000+00:00
+        Modified: 2000-01-23T04:56:07.000+00:00
+        LastLogin: 2000-01-23T04:56:07.000+00:00
+        WindowsAuthentication: true
+        Enabled: true
+        ID: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        Settings:
+        - SiteId: 6
+          Value: Value
+          SettingId: 0
+          Source: null
+        - SiteId: 6
+          Value: Value
+          SettingId: 0
+          Source: null
+        Name: Name
+        Created: 2000-01-23T04:56:07.000+00:00
+      properties:
+        ID:
+          description: Id of the login
+          format: uuid
+          type: string
+        Name:
+          description: The login name
+          type: string
+        WindowsAuthentication:
+          description: Does this login use external authentication?
+          type: boolean
+        Settings:
+          description: Settings for this login
+          items:
+            $ref: '#/components/schemas/SettingValue'
+          type: array
+        NewPassword:
+          description: "If you want to update the password for a login, include a\
+            \ NewPassword.  You can use this in a call to @see(UpdateLogin)"
+          type: string
+        Enabled:
+          description: Is this login flagged as disabled
+          type: boolean
+        PasswordExpires:
+          description: "If set, this is when the password for this login will expire.\
+            \  Any changes to this will be compared to the password policy"
+          format: date-time
+          nullable: true
+          type: string
+        LastLogin:
+          description: Last time this login was used
+          format: date-time
+          nullable: true
+          type: string
+        Created:
+          description: When was this login created
+          format: date-time
+          type: string
+        Modified:
+          description: Last time this login was modified
+          format: date-time
+          type: string
+      type: object
+      xml:
+        name: LoginInfo
+    SettingValue:
+      description: A setting value container
+      example:
+        SiteId: 6
+        Value: Value
+        SettingId: 0
+        Source: null
+      properties:
+        Value:
+          description: Value of the setting
+          type: string
+        SettingId:
+          description: Id of the setting
+          format: int32
+          type: integer
+        Source:
+          $ref: '#/components/schemas/SettingAppliesTo'
+        SiteId:
+          description: |-
+            If this setting comes from or should be applied to Login+Site, this is the SiteId.
+                        If this setting comes from Source = 1 (site), this setting will be ignored
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+      xml:
+        name: SettingValue
+    SettingAppliesTo:
+      description: "How can you use these settings?\n            Please note that\
+        \ this it possible to combine these\n            For instance, for a setting\
+        \ which is available for both logins and sites, a value of 3 is used\n   \
+        \         For SAML Assertions, it would typically be 6 because they are applied\
+        \ at both the issuer and the login \n            Issuer settings don't actually\
+        \ have values associated with the issuer; the issuer settings are the assertions\
+        \ which are applied to the login\n            Values 1,2,3 will be what is\
+        \ returned when you populate a @see(LoginInfo)\n            Showing where\
+        \ the value for this login came from."
+      enum:
+      - 1
+      - 2
+      - 4
+      format: int32
+      type: integer
+      x-enum-varnames:
+      - Site
+      - Login
+      - Issuer
+      x-enum-descriptions:
+      - Applies to sites
+      - "Applies to logins, regardless of sites"
+      - Applies to issuers
+    APIMetadata:
+      description: A class that contains information about the API itself in a format
+        suitable for parsing by another application
+      example:
+        validationRules:
+          key: validationRules
+        name: name
+      properties:
+        name:
+          description: The name of the method or class that the validation rules apply
+            to
+          type: string
+        validationRules:
+          additionalProperties:
+            type: string
+          description: |-
+            A list of name-object pairs. The name is the parameter (of the method) or property name (of the class), and the object is the list of @see(ValidationRule) rules that apply to it
+                        Each rule has it's own type to determine how it is evaluated, but if they all pass then the data is valid.
+          type: object
+      type: object
+      xml:
+        name: APIMetadata
+    APIMetadataType:
+      description: An enum which can be used to filter down the request to a particular
+        type. If this is not specified then all are returned
+      enum:
+      - 1
+      - 2
+      format: int32
+      type: integer
+      x-enum-varnames:
+      - METHOD
+      - CLASS
+      x-enum-descriptions:
+      - Show only method calls and the rules for the parameters in the method
+      - "Show only class types, and the rules for the properties in the class"
+    PasswordComplexityRules:
+      description: ""
+      example:
+        RequireMixedCase: true
+        NumChars: NumChars
+        NumNumeric: NumNumeric
+        MinimumLength: MinimumLength
+        PasswordReuse: PasswordReuse
+        NumSpecial: NumSpecial
+      properties:
+        MinimumLength:
+          description: Total minimum length of password
+          format: byte
+          type: string
+        NumChars:
+          description: "Minimum number of non-numeric, non-special characters"
+          format: byte
+          type: string
+        NumNumeric:
+          description: Minimum number of numeric values in password
+          format: byte
+          type: string
+        NumSpecial:
+          description: "Minimum number of special characters in password (special\
+            \ characters include %[`!@#$%&*()_=+\\|{};\",/])"
+          format: byte
+          type: string
+        RequireMixedCase:
+          description: Are Upper and Lower case characters required
+          type: boolean
+        PasswordReuse:
+          description: Can the password be changed to a previously used value
+          format: byte
+          type: string
+      type: object
+      xml:
+        name: PasswordComplexityRules
+    Setting:
+      description: ""
+      example:
+        AppliesTo: null
+        Value: Value
+        IsSystem: true
+        ID: 0
+        Name: Name
+      properties:
+        ID:
+          description: Id of the setting
+          format: int32
+          type: integer
+        Name:
+          description: "Name of the setting, must be unique"
+          type: string
+        AppliesTo:
+          $ref: '#/components/schemas/SettingAppliesTo'
+        IsSystem:
+          description: "Is this a system setting?  if so, any attempts to modify it\
+            \ will result in an AccessDenied error.  You can create a setting with\
+            \ IsSystem but, once created, you will not be able to change it [or delete\
+            \ it]"
+          type: boolean
+        Value:
+          description: This is only filled in with a call to @see(GetSettingsValues).  It
+            is ignored when creating settings
+          type: string
+      type: object
+      xml:
+        name: Setting
+    HostDetails:
+      description: ""
+      example:
+        host: host
+        isHTTPS: true
+      properties:
+        host:
+          description: |-
+            This is the name of the website in the IMS installation which is running the webserver.
+                        The Host value is used to control access to this Tridion site, and by default will allow access to every user in this host.
+          type: string
+        isHTTPS:
+          description: "This is a flag to say whether the Tridion site is available\
+            \ in an HTTPS installation of IMS. \n            If your IMS installation\
+            \ is using HTTPS then set this to 1, otherwise leave it as 0."
+          type: boolean
+      type: object
+      xml:
+        name: HostDetails
+    AuthSite:
+      description: Provides details about an authentication site
+      example:
+        Id: 0
+        Url: Url
+        Name: Name
+        SiteTypeId: 6
+      properties:
+        Name:
+          description: Name of the authentication site
+          type: string
+        Id:
+          description: Internal identifier for the authentication site
+          format: int32
+          type: integer
+        SiteTypeId:
+          description: Type of the authentication site.  See @see(GetSiteTypes) to
+            obtain a list of type ids
+          format: int32
+          type: integer
+        Url:
+          description: Root URL to the site
+          type: string
+      type: object
+      xml:
+        name: AuthSite
+    AuthSiteType:
+      description: Contains information about an authentication site type
+      example:
+        Id: 0
+        Name: Name
+      properties:
+        Name:
+          description: Name of the authentication site type
+          type: string
+        Id:
+          description: Internal identifier for the authentication site type
+          format: int32
+          type: integer
+      type: object
+      xml:
+        name: AuthSiteType
+    ApplicationLogin_request:
+      allOf:
+      - properties:
+          SiteId:
+            description: Id of the application to which you wish to obtain an access
+              token.  The list of available site ids is returned from either @see(FormsAuthentication)
+              or @see(SAMLAuthentication)
+            format: int32
+            type: integer
+    ApplicationLogin_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/ApplicationDetails'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          SiteID: 5
+          Token: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          Settings:
+            key: Settings
+    FormsAuthentication_request:
+      allOf:
+      - properties:
+          BumpExisting:
+            description: Not used at this time.
+            type: boolean
+          NewPassword:
+            description: "If a password change is required, provide it here."
+            type: string
+          Password:
+            description: SHA1 Encoded password
+            type: string
+          Username:
+            description: The login name
+            type: string
+    FormsAuthentication_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/AuthenticationResults'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          PasswordExpired: true
+          LoginID: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          Token: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          Sites:
+            key: null
+    GetIdentityUrl_request:
+      allOf:
+      - properties:
+          IdentityId:
+            description: ""
+            format: int32
+            type: integer
+          State:
+            description: ""
+            type: string
+    GetIdentityUrl_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            type: string
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result: Result
+    GetSiteDetails_request:
+      allOf:
+      - properties:
+          SiteId:
+            description: Id of the application to which you wish to obtain details.
+            format: int32
+            type: integer
+    Logout_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            type: boolean
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result: true
+    SAMLAuthentication_request:
+      allOf:
+      - properties:
+          SAMLResponse:
+            description: Properly signed and formatted SAMLResponse.
+            type: string
+    AddCertificate_request:
+      allOf:
+      - properties:
+          System:
+            description: Is this a system certificate
+            type: boolean
+          Thumbprint:
+            description: Certificate thumbprint.  This field is required.
+            type: string
+    AddCertificate_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            format: int32
+            type: integer
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result: 0
+    DeleteCertificate_request:
+      allOf:
+      - properties:
+          CertificateId:
+            description: Id of the certificate to delete
+            format: int32
+            type: integer
+    GetCertificate_request:
+      allOf:
+      - properties:
+          CertificateId:
+            description: Id of the certificate to retrieve
+            format: int32
+            type: integer
+    GetCertificate_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/Certificate'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          Thumbprint: Thumbprint
+          ID: 0
+          System: true
+    GetCertificates_request:
+      allOf:
+      - properties:
+          Cursor:
+            $ref: '#/components/schemas/APICursor'
+    GetCertificates_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/Certificate'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - Thumbprint: Thumbprint
+          ID: 0
+          System: true
+        - Thumbprint: Thumbprint
+          ID: 0
+          System: true
+    UpdateCertificate_request:
+      allOf:
+      - properties:
+          CertificateId:
+            description: Id of the certificate to update
+            format: int32
+            type: integer
+          Thumbprint:
+            description: "Certificate thumbprint.  If this is a system token, changes\
+              \ to this property are ignored.  If you attempt to make a change, it\
+              \ will be disregarded."
+            type: string
+    AddIssuer_request:
+      allOf:
+      - properties:
+          Issuer:
+            $ref: '#/components/schemas/Issuer'
+    DeleteIssuer_request:
+      allOf:
+      - properties:
+          IssuerId:
+            description: The Id of the issuer to be deleted.
+            format: int32
+            type: integer
+    GetIssuer_request:
+      allOf:
+      - properties:
+          IssuerId:
+            description: ID of a valid Issuer.
+            format: int32
+            type: integer
+    GetIssuer_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/Issuer'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          CertificateID: 6
+          ID: 0
+          Settings:
+          - 1
+          - 1
+          Name: Name
+    GetIssuers_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/Issuer'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - CertificateID: 6
+          ID: 0
+          Settings:
+          - 1
+          - 1
+          Name: Name
+        - CertificateID: 6
+          ID: 0
+          Settings:
+          - 1
+          - 1
+          Name: Name
+    AddLogin_request:
+      allOf:
+      - properties:
+          Login:
+            $ref: '#/components/schemas/LoginInfo'
+    AddLogin_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            format: uuid
+            type: string
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+    DisableLogin_request:
+      allOf:
+      - properties:
+          LoginId:
+            description: Id of the login to disable
+            format: uuid
+            type: string
+    EnableLogin_request:
+      allOf:
+      - properties:
+          LoginId:
+            description: Id of the login to enable
+            format: uuid
+            type: string
+    GetCurrentLogin_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/LoginInfo'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          NewPassword: NewPassword
+          PasswordExpires: 2000-01-23T04:56:07.000+00:00
+          Modified: 2000-01-23T04:56:07.000+00:00
+          LastLogin: 2000-01-23T04:56:07.000+00:00
+          WindowsAuthentication: true
+          Enabled: true
+          ID: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          Settings:
+          - SiteId: 6
+            Value: Value
+            SettingId: 0
+            Source: null
+          - SiteId: 6
+            Value: Value
+            SettingId: 0
+            Source: null
+          Name: Name
+          Created: 2000-01-23T04:56:07.000+00:00
+    GetLogin_request:
+      allOf:
+      - properties:
+          LoginId:
+            description: Id of the login to return
+            format: uuid
+            type: string
+    GetLogins_request:
+      allOf:
+      - properties:
+          Enabled:
+            description: "If you want to query by the enabled, provide this parameter"
+            nullable: true
+            type: boolean
+          Exclusion:
+            description: List of login Ids to exclude from the result
+            items:
+              format: uuid
+              type: string
+            type: array
+          Inclusion:
+            description: List of login Ids to return
+            items:
+              format: uuid
+              type: string
+            type: array
+          NoSettings:
+            description: "If you do not want settings to be returns, pass in true"
+            type: boolean
+          SettingValues:
+            additionalProperties:
+              format: int32
+              type: integer
+            description: "If you would like to query by setting value, populate this\
+              \ dictionary"
+            type: object
+    GetLogins_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/LoginInfo'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - NewPassword: NewPassword
+          PasswordExpires: 2000-01-23T04:56:07.000+00:00
+          Modified: 2000-01-23T04:56:07.000+00:00
+          LastLogin: 2000-01-23T04:56:07.000+00:00
+          WindowsAuthentication: true
+          Enabled: true
+          ID: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          Settings:
+          - SiteId: 6
+            Value: Value
+            SettingId: 0
+            Source: null
+          - SiteId: 6
+            Value: Value
+            SettingId: 0
+            Source: null
+          Name: Name
+          Created: 2000-01-23T04:56:07.000+00:00
+        - NewPassword: NewPassword
+          PasswordExpires: 2000-01-23T04:56:07.000+00:00
+          Modified: 2000-01-23T04:56:07.000+00:00
+          LastLogin: 2000-01-23T04:56:07.000+00:00
+          WindowsAuthentication: true
+          Enabled: true
+          ID: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          Settings:
+          - SiteId: 6
+            Value: Value
+            SettingId: 0
+            Source: null
+          - SiteId: 6
+            Value: Value
+            SettingId: 0
+            Source: null
+          Name: Name
+          Created: 2000-01-23T04:56:07.000+00:00
+    RenameLogin_request:
+      allOf:
+      - properties:
+          LoginId:
+            description: Id of the login you wish to rename
+            format: uuid
+            type: string
+          Name:
+            description: New login name
+            type: string
+    UpdateLoginEx_request:
+      allOf:
+      - properties:
+          ExternalAuthentication:
+            description: Should this login be exteral authenticated
+            type: boolean
+          LoginId:
+            description: Id of the login
+            format: uuid
+            type: string
+          Name:
+            description: Name of the login
+            type: string
+          NewPassword:
+            description: "If you want to reset the password, provide it here.  If\
+              \ ExternalAuth is true, this property is ignored."
+            type: string
+          Settings:
+            description: Settings to apply to the login
+            items:
+              $ref: '#/components/schemas/SettingValue'
+            type: array
+    GetAPIMetadata_request:
+      allOf:
+      - properties:
+          Cursor:
+            $ref: '#/components/schemas/APICursor'
+          IncludeEmpty:
+            description: ""
+            type: boolean
+          MetadataName:
+            description: ""
+            type: string
+          MetadataType:
+            $ref: '#/components/schemas/APIMetadataType'
+    GetAPIMetadata_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/APIMetadata'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - validationRules:
+            key: validationRules
+          name: name
+        - validationRules:
+            key: validationRules
+          name: name
+    ChangePassword_request:
+      allOf:
+      - properties:
+          LoginId:
+            description: Login Id of the password to change.
+            format: uuid
+            type: string
+          Password:
+            description: "New password.  If this is a SAML or NTLM login, it can be\
+              \ NULL."
+            type: string
+    ExpirePassword_request:
+      allOf:
+      - properties:
+          LoginId:
+            description: Login for which to expire password.
+            format: uuid
+            type: string
+    GetPasswordComplexityRules_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/PasswordComplexityRules'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          RequireMixedCase: true
+          NumChars: NumChars
+          NumNumeric: NumNumeric
+          MinimumLength: MinimumLength
+          PasswordReuse: PasswordReuse
+          NumSpecial: NumSpecial
+    AddSetting_request:
+      allOf:
+      - properties:
+          Setting:
+            $ref: '#/components/schemas/Setting'
+    DeleteSetting_request:
+      allOf:
+      - properties:
+          SettingId:
+            description: The Id of a valid Setting to delete
+            format: int32
+            type: integer
+    GetSetting_request:
+      allOf:
+      - properties:
+          SettingId:
+            description: The Id of a valid Setting to retrieve
+            format: int32
+            type: integer
+    GetSetting_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/Setting'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          AppliesTo: null
+          Value: Value
+          IsSystem: true
+          ID: 0
+          Name: Name
+    GetSettings_request:
+      allOf:
+      - properties:
+          AppliesTo:
+            $ref: '#/components/schemas/SettingAppliesTo'
+          Cursor:
+            $ref: '#/components/schemas/APICursor'
+    GetSettings_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/Setting'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - AppliesTo: null
+          Value: Value
+          IsSystem: true
+          ID: 0
+          Name: Name
+        - AppliesTo: null
+          Value: Value
+          IsSystem: true
+          ID: 0
+          Name: Name
+    GetSettingsValues_request:
+      allOf:
+      - properties:
+          Cursor:
+            $ref: '#/components/schemas/APICursor'
+          IssuerId:
+            description: Issuer Id the Setting Applies to
+            format: int32
+            nullable: true
+            type: integer
+          LoginId:
+            description: Login Id the Setting Applies to
+            format: uuid
+            nullable: true
+            type: string
+          SettingIds:
+            description: List of setting Ids
+            items:
+              format: int32
+              type: integer
+            type: array
+          SiteId:
+            description: Site Id the Setting Applies to
+            format: int32
+            nullable: true
+            type: integer
+    SetEMServiceURL_request:
+      allOf:
+      - properties:
+          EMServiceURL:
+            description: New EM service URL
+            type: string
+    GetHostNames_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/HostDetails'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - host: host
+          isHTTPS: true
+        - host: host
+          isHTTPS: true
+    GetSite_request:
+      allOf:
+      - properties:
+          SiteId:
+            description: Site id of the site you would like to get the name and URL
+            format: int32
+            type: integer
+    GetSite_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            $ref: '#/components/schemas/AuthSite'
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+          Id: 0
+          Url: Url
+          Name: Name
+          SiteTypeId: 6
+    GetSites_request:
+      allOf:
+      - properties:
+          SiteTypeId:
+            description: "Optionally filter to a specific site type, use @see(GetSiteTypes)\
+              \ to obtain a list of acceptable parameters"
+            format: int32
+            nullable: true
+            type: integer
+    GetSites_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/AuthSite'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - Id: 0
+          Url: Url
+          Name: Name
+          SiteTypeId: 6
+        - Id: 0
+          Url: Url
+          Name: Name
+          SiteTypeId: 6
+    GetSiteTypes_default_response:
+      allOf:
+      - $ref: '#/components/schemas/OperationResult'
+      - properties:
+          Result:
+            items:
+              $ref: '#/components/schemas/AuthSiteType'
+            type: array
+        type: object
+      example:
+        Cursor:
+          SortProperty: SortProperty
+          Total: 1
+          From: 0
+          To: 6
+          SortDescending: true
+        StatusCode: StatusCode
+        Detail:
+        - - Detail
+          - Detail
+        - - Detail
+          - Detail
+        DebugMessage: DebugMessage
+        Result:
+        - Id: 0
+          Name: Name
+        - Id: 0
+          Name: Name
+  securitySchemes:
+    TokenAuth:
+      in: header
+      name: X-Api-Key
+      type: apiKey
+
